@@ -1,0 +1,1118 @@
+{% extends "auctions/layout.html" %} {% block body %}
+<style>
+    /*! CSS Used from: https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css */
+    
+    a {
+        background-color: transparent;
+    }
+    
+    a:active,
+    a:hover {
+        outline: 0;
+    }
+    
+    h1 {
+        margin: 0.67em 0;
+        font-size: 2em;
+    }
+    
+    img {
+        border: 0;
+    }
+    
+    @media print {
+        *,
+         :after,
+         :before {
+            color: #000 !important;
+            text-shadow: none !important;
+            background: 0 0 !important;
+            -webkit-box-shadow: none !important;
+            box-shadow: none !important;
+        }
+        a,
+        a:visited {
+            text-decoration: underline;
+        }
+        a[href]:after {
+            content: " (" attr(href) ")";
+        }
+        a[href^="#"]:after {
+            content: "";
+        }
+        img {
+            page-break-inside: avoid;
+        }
+        img {
+            max-width: 100% !important;
+        }
+        h3 {
+            orphans: 3;
+            widows: 3;
+        }
+        h3 {
+            page-break-after: avoid;
+        }
+    }
+    
+    * {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+    
+     :after,
+     :before {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+    
+    a {
+        color: #337ab7;
+        text-decoration: none;
+    }
+    
+    a:focus,
+    a:hover {
+        color: #23527c;
+        text-decoration: underline;
+    }
+    
+    a:focus {
+        outline: 5px auto -webkit-focus-ring-color;
+        outline-offset: -2px;
+    }
+    
+    img {
+        vertical-align: middle;
+    }
+    
+    .img-responsive {
+        display: block;
+        max-width: 100%;
+        height: auto;
+    }
+    
+    h1,
+    h3 {
+        font-family: inherit;
+        font-weight: 500;
+        line-height: 1.1;
+        color: inherit;
+    }
+    
+    h1,
+    h3 {
+        margin-top: 20px;
+        margin-bottom: 10px;
+    }
+    
+    h1 {
+        font-size: 36px;
+    }
+    
+    h3 {
+        font-size: 24px;
+    }
+    
+    ul {
+        margin-top: 0;
+        margin-bottom: 10px;
+    }
+    
+    .row {
+        margin-right: -15px;
+        margin-left: -15px;
+    }
+    
+    .col-md-6 {
+        position: relative;
+        min-height: 1px;
+        padding-right: 15px;
+        padding-left: 15px;
+    }
+    
+    @media (min-width: 992px) {
+        .col-md-6 {
+            float: left;
+        }
+        .col-md-6 {
+            width: 50%;
+        }
+    }
+    
+    .row:after,
+    .row:before {
+        display: table;
+        content: " ";
+    }
+    
+    .row:after {
+        clear: both;
+    }
+    /*! CSS Used from: https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css */
+    
+    .fa {
+        display: inline-block;
+        font: normal normal normal 14px/1 FontAwesome;
+        font-size: inherit;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+    
+    .fa-plus-circle:before {
+        content: "\f055";
+    }
+    
+    .fa-question-circle:before {
+        content: "\f059";
+    }
+    
+    .fa-shopping-cart:before {
+        content: "\f07a";
+    }
+    /*! CSS Used from: Embedded */
+    
+    .row {
+        margin: 0;
+        padding: 0;
+        font-size: 14px;
+    }
+    
+    .row a,
+    .container a {
+        text-decoration: none;
+    }
+    
+    .row a:hover,
+    .container a:hover {
+        color: #555;
+    }
+    
+    .box {
+        margin: 0;
+        padding: 0;
+        background: #fff;
+        color: #444;
+        border: 1px solid #bababa;
+        text-align: left;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+    }
+    
+    .artdesc {
+        margin: 0;
+        padding: 0 20px 20px 0;
+        font-family: "montserrat", sans-serif;
+    }
+    
+    .artdesc h1 {
+        font-family: "Racing Sans One", cursive;
+        font-size: 24px;
+        color: #8055a9;
+        text-align: left;
+        margin: 0;
+        padding: 25px 0 10px 0;
+    }
+    
+    .artdesc h3 {
+        font-family: "Racing Sans One", cursive;
+        font-size: 32px;
+        color: #8055a9;
+        text-align: center;
+        margin: 20px 0;
+        padding: 0;
+    }
+    
+    .artdesc ul {
+        margin: 0;
+        padding: 0;
+        font-size: 14px;
+        border: none;
+        border-top: 1px dotted #ddd;
+    }
+    
+    .artdesc ul li {
+        list-style-type: none;
+        background: #fcfcfc;
+        margin: 0;
+        padding: 10px;
+        border-bottom: 1px dotted #ddd;
+        font-family: "montserrat", sans-serif;
+        font-size: 14px;
+    }
+    
+    .artdesc ul li:before {
+        font-family: "FontAwesome";
+        content: "\f105";
+        font-size: 14px;
+        padding-right: 10px;
+        color: #8055a9;
+    }
+    
+    a.sk {
+        display: block;
+        color: #fff;
+        background: #333;
+        margin: 0;
+        padding: 10px 0;
+        font-size: 20px;
+        font-family: "Racing Sans One", cursive;
+        text-align: center;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px;
+        border: none;
+    }
+    
+    a.sk:hover {
+        background: #00fff3;
+        color: #fff;
+        text-decoration: none;
+    }
+    
+    a.be,
+    a.fs,
+    .fs {
+        width: 48%;
+        display: inline-block;
+        border: none;
+        background: none;
+        margin: 0;
+        font-size: 18px;
+        padding: 15px 0;
+        font-family: "Racing Sans One", cursive;
+        color: #555;
+        text-align: center;
+    }
+    
+    a.be i,
+    a.fs i {
+        color: #8055a9;
+        padding-right: 10px;
+    }
+    
+    a.be:hover,
+    a.fs:hover {
+        color: #8055a9;
+        text-decoration: none;
+    }
+    
+    .artpic {
+        margin: 20px 0;
+        padding: 0;
+    }
+    
+    .image-gallery {
+        width: 100%;
+        height: 500px;
+        margin: 0 auto;
+    }
+    
+    .image-gallery .big-image {
+        width: 400px;
+        height: 400px;
+        margin: 0 auto;
+        position: relative;
+    }
+    
+    .image-gallery .big-image img {
+        opacity: 0;
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        max-height: 400px;
+        width: auto;
+        margin: 0;
+    }
+    
+    .image-gallery .big-image img:target {
+        opacity: 1;
+    }
+    
+    .image-gallery .big-image img:target~img#default {
+        opacity: 0;
+    }
+    
+    .image-gallery .big-image img#default {
+        opacity: 1;
+    }
+    
+    .image-gallery .thumbs {
+        margin: 0;
+        position: relative;
+        top: 5px;
+    }
+    
+    .image-gallery .thumbs ul {
+        list-style-type: none;
+        margin: 0 !important;
+        padding: 0 !important;
+        text-align: center;
+        border: none;
+        background: none;
+    }
+    
+    .image-gallery .thumbs li {
+        width: 23%;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: inline-block;
+        margin-right: 3px;
+        text-align: center;
+        border: none;
+        background: none;
+    }
+    
+    .image-gallery .thumbs li a:hover {
+        opacity: 1;
+    }
+    
+    .image-gallery .thumbs li a {
+        opacity: 0.85;
+        text-align: center;
+    }
+    
+    .image-gallery .thumbs li a:focus {
+        opacity: 1;
+    }
+    
+    .image-gallery .thumbs li img {
+        max-height: 80px;
+        width: auto;
+        margin: 0 auto;
+    }
+    
+    @media (min-width: 992px) and (max-width: 1200px) {
+        .artdesc {
+            padding-left: 30px;
+        }
+        .artpic {
+            padding-left: 10px;
+        }
+        a.be,
+        a.fs {
+            font-size: 14px;
+        }
+    }
+    
+    @media (min-width: 768px) and (max-width: 992px) {
+        .artdesc,
+        .artpic {
+            margin: 10px 20px;
+            padding: 0;
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .artdesc {
+            margin: 0;
+            padding: 0 20px;
+        }
+        a.be,
+        a.fs {
+            width: 100%;
+            display: block;
+            padding: 10px 0;
+        }
+        a.be i,
+        a.fs i {
+            margin: 0;
+            padding: 0;
+        }
+        .image-gallery {
+            width: 270px;
+            height: 310px;
+        }
+        .image-gallery .big-image {
+            width: 270px;
+            height: 270px;
+            margin: 0;
+        }
+        .image-gallery .big-image img {
+            max-height: 270px;
+            width: auto;
+        }
+        .image-gallery .thumbs {
+            top: 10px;
+            max-width: 270px;
+        }
+        .image-gallery .thumbs li {
+            width: 20%;
+        }
+        .image-gallery .thumbs li img {
+            max-height: 50px;
+            width: auto;
+        }
+    }
+    /*! CSS Used fontfaces */
+    
+    @font-face {
+        font-family: "FontAwesome";
+        src: url("https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/fonts/fontawesome-webfont.eot?v=4.7.0");
+        src: url("https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/fonts/fontawesome-webfont.eot#iefix&v=4.7.0") format("embedded-opentype"), url("https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/fonts/fontawesome-webfont.woff2?v=4.7.0") format("woff2"), url("https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/fonts/fontawesome-webfont.woff?v=4.7.0") format("woff"), url("https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/fonts/fontawesome-webfont.ttf?v=4.7.0") format("truetype"), url("https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/fonts/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular") format("svg");
+        font-weight: normal;
+        font-style: normal;
+    }
+    
+    @font-face {
+        font-family: "Racing Sans One";
+        font-style: normal;
+        font-weight: 400;
+        src: local("Racing Sans One"), local("RacingSansOne-Regular"), url(https://fonts.gstatic.com/s/racingsansone/v7/sykr-yRtm7EvTrXNxkv5jfKKyDCAJnDnapI.woff2) format("woff2");
+        unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
+    
+    @font-face {
+        font-family: "Racing Sans One";
+        font-style: normal;
+        font-weight: 400;
+        src: local("Racing Sans One"), local("RacingSansOne-Regular"), url(https://fonts.gstatic.com/s/racingsansone/v7/sykr-yRtm7EvTrXNxkv5jfKKyDCAKHDn.woff2) format("woff2");
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+    /*! CSS Used from: https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css */
+    
+    a {
+        background-color: transparent;
+    }
+    
+    a:active,
+    a:hover {
+        outline: 0;
+    }
+    
+    b,
+    strong {
+        font-weight: 700;
+    }
+    
+    h1 {
+        margin: 0.67em 0;
+        font-size: 2em;
+    }
+    
+    input {
+        margin: 0;
+        font: inherit;
+        color: inherit;
+    }
+    
+    input::-moz-focus-inner {
+        padding: 0;
+        border: 0;
+    }
+    
+    input {
+        line-height: normal;
+    }
+    
+    input[type="radio"] {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        padding: 0;
+    }
+    
+    @media print {
+        *,
+         :after,
+         :before {
+            color: #000 !important;
+            text-shadow: none !important;
+            background: 0 0 !important;
+            -webkit-box-shadow: none !important;
+            box-shadow: none !important;
+        }
+        a,
+        a:visited {
+            text-decoration: underline;
+        }
+        a[href]:after {
+            content: " (" attr(href) ")";
+        }
+        h3,
+        p {
+            orphans: 3;
+            widows: 3;
+        }
+        h3 {
+            page-break-after: avoid;
+        }
+    }
+    
+    * {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+    
+     :after,
+     :before {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+    
+    input {
+        font-family: inherit;
+        font-size: inherit;
+        line-height: inherit;
+    }
+    
+    a {
+        color: #337ab7;
+        text-decoration: none;
+    }
+    
+    a:focus,
+    a:hover {
+        color: #23527c;
+        text-decoration: underline;
+    }
+    
+    a:focus {
+        outline: 5px auto -webkit-focus-ring-color;
+        outline-offset: -2px;
+    }
+    
+    h1,
+    h3 {
+        font-family: inherit;
+        font-weight: 500;
+        line-height: 1.1;
+        color: inherit;
+    }
+    
+    h1,
+    h3 {
+        margin-top: 20px;
+        margin-bottom: 10px;
+    }
+    
+    h1 {
+        font-size: 36px;
+    }
+    
+    h3 {
+        font-size: 24px;
+    }
+    
+    p {
+        margin: 0 0 10px;
+    }
+    
+    .text-left {
+        text-align: left;
+    }
+    
+    ul {
+        margin-top: 0;
+        margin-bottom: 10px;
+    }
+    
+    .row {
+        margin-right: -15px;
+        margin-left: -15px;
+    }
+    
+    .col-md-12,
+    .col-sm-6 {
+        position: relative;
+        min-height: 1px;
+        padding-right: 15px;
+        padding-left: 15px;
+    }
+    
+    @media (min-width: 768px) {
+        .col-sm-6 {
+            float: left;
+        }
+        .col-sm-6 {
+            width: 50%;
+        }
+    }
+    
+    @media (min-width: 992px) {
+        .col-md-12 {
+            float: left;
+        }
+        .col-md-12 {
+            width: 100%;
+        }
+    }
+    
+    label {
+        display: inline-block;
+        max-width: 100%;
+        margin-bottom: 5px;
+        font-weight: 700;
+    }
+    
+    input[type="radio"] {
+        margin: 4px 0 0;
+        margin-top: 1px\9;
+        line-height: normal;
+    }
+    
+    input[type="radio"]:focus {
+        outline: 5px auto -webkit-focus-ring-color;
+        outline-offset: -2px;
+    }
+    
+    .panel {
+        margin-bottom: 20px;
+        background-color: #fff;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+    }
+    
+    .panel-body {
+        padding: 15px;
+    }
+    
+    .panel-heading {
+        padding: 10px 15px;
+        border-bottom: 1px solid transparent;
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;
+    }
+    
+    .panel-title {
+        margin-top: 0;
+        margin-bottom: 0;
+        font-size: 16px;
+        color: inherit;
+    }
+    
+    .panel-warning {
+        border-color: #faebcc;
+    }
+    
+    .panel-warning>.panel-heading {
+        color: #8a6d3b;
+        background-color: #fcf8e3;
+        border-color: #faebcc;
+    }
+    
+    .panel-body:after,
+    .panel-body:before,
+    .row:after,
+    .row:before {
+        display: table;
+        content: " ";
+    }
+    
+    .panel-body:after,
+    .row:after {
+        clear: both;
+    }
+    /*! CSS Used from: https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css */
+    
+    .fa {
+        display: inline-block;
+        font: normal normal normal 14px/1 FontAwesome;
+        font-size: inherit;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+    
+    .fa-check-square-o:before {
+        content: "\f046";
+    }
+    /*! CSS Used from: Embedded */
+    
+    .row {
+        margin: 0;
+        padding: 0;
+        font-size: 14px;
+    }
+    
+    .row a,
+    .container a {
+        text-decoration: none;
+    }
+    
+    .row a:hover,
+    .container a:hover {
+        color: #555;
+    }
+    
+    .tab-content ul {
+        margin: 0;
+        padding: 0;
+        font-size: 14px;
+        border: none;
+        border-top: 1px dotted #ddd;
+    }
+    
+    .tab-content ul li {
+        list-style-type: none;
+        background: #fcfcfc;
+        margin: 0;
+        padding: 10px;
+        border-bottom: 1px dotted #ddd;
+        font-family: "montserrat", sans-serif;
+        font-size: 14px;
+    }
+    
+    .tab-content ul li:before {
+        font-family: "FontAwesome";
+        content: "\f105";
+        font-size: 14px;
+        padding-right: 10px;
+        color: #8055a9;
+    }
+    
+    .tabs {
+        margin: 20px 0 0 0;
+        padding: 0;
+        background: none;
+        text-align: left;
+    }
+    
+    .tabs input[type="radio"] {
+        display: none;
+    }
+    
+    .tabs label {
+        display: block;
+        float: left;
+        font-family: "Racing Sans One", cursive;
+        color: #666;
+        font-size: 18px;
+        font-weight: 400;
+        text-decoration: none;
+        text-align: center;
+        cursor: pointer;
+        background: none;
+        padding: 15px;
+        margin: 0;
+        width: 18%;
+    }
+    
+    .tabs label span {
+        display: inline-block;
+    }
+    
+    .tab-content {
+        display: none;
+        width: 100%;
+        float: left;
+        padding: 20px 15px;
+        box-sizing: border-box;
+        background: #fff;
+        border: 1px solid #bababa;
+        border-top: 4px solid #8055a9;
+        margin-top: -5px;
+        font-family: "montserrat", sans-serif;
+        font-size: 14px;
+        color: #555;
+        -webkit-border-bottom-right-radius: 5px;
+        -webkit-border-bottom-left-radius: 5px;
+        -moz-border-radius-bottomright: 5px;
+        -moz-border-radius-bottomleft: 5px;
+        border-bottom-right-radius: 5px;
+        border-bottom-left-radius: 5px;
+    }
+    
+    .tab-content h1 {
+        font-family: "Racing Sans One", cursive;
+        font-size: 18px;
+        color: #555;
+        text-align: left;
+        margin: 0;
+        padding: 0 0 10px 0;
+        border: none;
+        background: none;
+    }
+    
+    .tabs [id^="tab"]:checked+label {
+        background: #8055a9;
+        color: #fff;
+        -webkit-border-top-left-radius: 5px;
+        -webkit-border-top-right-radius: 5px;
+        -moz-border-radius-topleft: 5px;
+        -moz-border-radius-topright: 5px;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+    }
+    
+    #tab1:checked~#tab-content1,
+    #tab2:checked~#tab-content2,
+    #tab3:checked~#tab-content3,
+    #tab4:checked~#tab-content4 {
+        display: block;
+    }
+    
+    .tabs:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+    
+    .tab-content a:link,
+    .tab-content a:visited {
+        color: #8055a9 !important;
+    }
+    
+    .tab-content a:hover {
+        color: #555 !important;
+        text-decoration: none;
+    }
+    
+    @media (max-width: 768px) {
+        .tabs label {
+            width: 100%;
+            -webkit-border-radius: 0px !important;
+            -moz-border-radius: 0px !important;
+            border-radius: 0px !important;
+        }
+        .tabs label span {
+            display: inline-block;
+        }
+    }
+    
+    .dropbtn {
+        background-color: #f9f9f9;
+        color: #0f0f0f;
+        padding: 16px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+        min-width: 100%;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    }
+    
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+    
+    .dropdown-content {
+        position: absolute;
+        background-color: #f9f9f9;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        z-index: 98;
+        max-height: 0;
+        min-width: 100%;
+        transition: max-height 0.15s ease-out;
+        overflow: hidden;
+    }
+    
+    .dropdown-content a {
+        color: black;
+        background-color: #f9f9f9;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
+    
+    .dropdown-content a:hover {
+        background-color: #e2e2e2;
+    }
+    
+    .dropdown:hover .dropdown-content {
+        max-height: 500px;
+        min-width: 100%;
+        transition: max-height 0.25s ease-in;
+    }
+    
+    .dropdown:hover .dropbtn {
+        background-color: #f9f9f9;
+        border-bottom: 1px solid #e0e0e0;
+        transition: max-height 0.25s ease-in;
+    }
+    /*! CSS Used fontfaces */
+    
+    @font-face {
+        font-family: "FontAwesome";
+        src: url("https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/fonts/fontawesome-webfont.eot?v=4.7.0");
+        src: url("https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/fonts/fontawesome-webfont.eot#iefix&v=4.7.0") format("embedded-opentype"), url("https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/fonts/fontawesome-webfont.woff2?v=4.7.0") format("woff2"), url("https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/fonts/fontawesome-webfont.woff?v=4.7.0") format("woff"), url("https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/fonts/fontawesome-webfont.ttf?v=4.7.0") format("truetype"), url("https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/fonts/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular") format("svg");
+        font-weight: normal;
+        font-style: normal;
+    }
+    
+    @font-face {
+        font-family: "Racing Sans One";
+        font-style: normal;
+        font-weight: 400;
+        src: local("Racing Sans One"), local("RacingSansOne-Regular"), url(https://fonts.gstatic.com/s/racingsansone/v7/sykr-yRtm7EvTrXNxkv5jfKKyDCAJnDnapI.woff2) format("woff2");
+        unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    }
+    
+    @font-face {
+        font-family: "Racing Sans One";
+        font-style: normal;
+        font-weight: 400;
+        src: local("Racing Sans One"), local("RacingSansOne-Regular"), url(https://fonts.gstatic.com/s/racingsansone/v7/sykr-yRtm7EvTrXNxkv5jfKKyDCAKHDn.woff2) format("woff2");
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+</style>
+
+
+
+<div class="row box">
+    <div class="col-md-6 artpic">
+        <div class="image-gallery">
+            <div class="big-image"><img id="image1" src="/media/{{ auction.image }}" class="img-responsive"><img id="image2" src="/media/{{ auction.image }}" class="img-responsive"><img id="image3" src="/media/{{ auction.image }}" class="img-responsive"><img id="image4" src="/media/{{ auction.image }}"
+                    class="img-responsive"><img id="default" src="/media/{{ auction.image }}" class="img-responsive"></div>
+            <div class="thumbs">
+                <ul>
+                    <li>
+                        <a href="#image1"><img src="https://s20.postimg.cc/5njziir7x/product_image_1.jpg" class="img-responsive"></a>
+                    </li>
+                    <li>
+                        <a href="#image2"><img src="https://s20.postimg.cc/4sxfwhjd9/product_image_2.jpg" class="img-responsive"></a>
+                    </li>
+                    <li>
+                        <a href="#image3"><img src="https://s20.postimg.cc/s9pav94y5/product_image_3.jpg" class="img-responsive"></a>
+                    </li>
+                    <li>
+                        <a href="#image4"><img src="https://s20.postimg.cc/riwkph2kt/product_image_4.jpg" class="img-responsive"></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 artdesc">
+        <h1>{{auction.title}}</h1> {{auction.description}}<br> <br>
+        <ul>
+            <li>Fully Mobile &amp; Tablet Friendly</li>
+            <li>Super Fast Loading</li>
+            <li>2020 Optimized</li>
+            <li>No Active Content / Dynamic Content</li>
+            <li>No plug-ins</li>
+            <li>HTTPS compliant secured html code</li>
+        </ul>
+        <h3>$ {{auction.price}}</h3>
+        <a class="sk" href="https://offer.ebay.com/ws/eBayISAPI.dll?BinConfirm&amp;item=332290483035" target="_blank"><i class="fa fa-shopping-cart"></i> Buy it Now</a> &nbsp; {% if user.is_authenticated %}<a class="be" href="{% url 'add_to_wishlist' auction.id %}"
+            target="_blank"><i class="fa fa-plus-circle"></i> Watch Item</a>{% else %} <a class="be" target="_blank"><i class="fa fa-plus-circle"></i> Watch Item</a> {% endif %} {% if user.is_authenticated and auction.is_active %}
+        <div class="dropdown fs">
+            <a class="fs dropbtn" for="btnControl" href="https://contact.ebay.com/ws/eBayISAPI.dll?ContactUserNextGen&amp;recipient=tapika-store" target="_blank"><i class="fa fa-question-circle"></i> Make an offer</a>
+            <div class="dropdown-content">
+                <form action="{% url 'bid' %}" class="card-content" method="POST" style="margin-top:8px;">
+
+                    <div class="form-input">
+                        <label for="bid"></label> {% csrf_token %} {{bid.as_p}}
+                        <input type="hidden" value="{{ item.id }}" name="item_id">
+                        <button class="subscribe-btn" type="submit" min={{auction.price}}>Bid</button>
+                    </div>
+                </form>
+                <p class="alert"> NB: No bid below {% if auction.current_price is None %} {{auction.price}}{% else %} {{auction.current_price}}{% endif %} is accepted</p>
+            </div>
+            {% else %}
+            <div class="dropdown fs">
+                <a class="fs dropbtn" for="btnControl" href="https://contact.ebay.com/ws/eBayISAPI.dll?ContactUserNextGen&amp;recipient=tapika-store" target="_blank"><i class="fa fa-question-circle"></i> Make an offer</a>
+                <div class="dropdown-content">
+                    <p class="alert card-content"> Not active for bid</p>
+                </div>
+                {% endif %}
+
+            </div>
+            <h6>
+                {% if messages %} {% for message in messages %}
+                <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}" role="alert">{{ message }}</div>
+                {% endfor %} {% endif %}
+            </h6>
+        </div>
+
+
+        <!-- {% if message %}
+    <div class="alert alert-warning" alert-{{ message }}" role="alert">
+    {% for message in message  %}
+      {{message|safe}} - <a href="{% url 'wishlist' %}" class="alert-link">Your Wishlist</a>.
+    {% endfor %}
+    </div>
+    {% endif %} -->
+    </div>
+
+    <div class="tabs"> <input name="tabs" id="tab1" checked="" type="radio"> <label for="tab1"><span>Description</span></label> <input name="tabs" id="tab2" type="radio"> <label for="tab2"><span>Comments</span></label> <input name="tabs" id="tab3" type="radio"> <label for="tab3"><span>Delivery</span></label>    {% if request.user == auction.creator %}    <input name="tabs" id="tab4" type="radio"> <label for="tab4"><span>Close Bid</span></label> {% elif request.user == auction.buyer and not auction.is_active %}  <label for="tab4"><span>Bid Winner</span></label> {% endif %}
+        <div id="tab-content1" class="tab-content">
+            <div class="row">
+                <div class="col-sm-6"></div>
+                <div class="col-md-12"><br>
+                    <h1>Info</h1>
+                    <p><span style="font-weight: 700;">This template is 100% HTTPS compliant.</span></p>
+                    <p><span style="font-weight: 700;">This template does not contain any Active Content.</span></p> <br>
+                    <h1>Features of this listing template:</h1>
+                    <ul>
+                        <li><strong>Responsive Design</strong> (Mobile, Tablet &amp; <b>eBay App</b> optimized)</li>
+                        <li>Template can be used to<b> list any type of products</b></li>
+                        <li>Template <b>can be used with or without subscription to eBay Shop/Store</b></li>
+                        <li>Maximum 5 images in the Image Gallery</li>
+                        <li>Completely <strong>Flexible</strong> &amp; <strong>Editable</strong></li>
+                        <li>Shop categories (<strong>NOT dynamic/automatic</strong>)</li>
+                        <li>100% eBay Policy Violation Free</li>
+                        <li>Template is compatible with All Desktop Browsers and Mobile Browsers</li>
+                        <li><span style="font-weight: 700;">HTTPS compliant secured html code</span></li>
+                    </ul> <br>
+
+
+
+                </div>
+            </div>
+        </div>
+        <div id="tab-content2" class="tab-content"><br>
+            <h1>Comments</h1>
+            <p><form action="{% url 'comment' auction.id%}" class="card-content" method="POST" style="margin-top:8px;">
+                <label for="comment"></label> {% csrf_token %} {{com.as_p}}
+                        <input type="hidden" value="{{ item.id }}" name="item_id">
+                        <button class="subscribe-btn" type="submit">Comment</button>
+            </form></p>
+
+            {% if comments %}
+            {% for comment in comments  %}
+          
+            <div class="card mb-3 rounded-0">
+              <div class="row g-0">
+                <div class="col-md-2">
+                 
+                    
+                    <img class="img-fluid d-block p-2" width="135px" src="/media/{{ auction.image }}"
+                      alt="{{ image.image.alt_text }}" />
+                   
+                 
+                </div>
+                <div class="col-md-10">
+                  <div class="card-body">
+                    <h5 class="card-title">{{comment.auction_id}}</h5>
+                    <p class="card-text">{{comment.comment}}</p>
+                    <p class="card-text"><small class="text-muted">{{comment.user}}</small></p>
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+          
+            {% endfor %}
+            {% else %}
+            <p class="card-text">No Comment have been added to this item</p>
+            {% endif %}
+         
+       
+        </div>
+        <div id="tab-content3" class="tab-content"><br>
+            <h1>Shipping Information</h1>
+            <p>After payment you will receive the template files within 24 hours via email to your PayPal email address.</p>
+            <p>Complete Auction Template</p>
+            <p>Instructions file</p>
+        </div>
+        <div id="tab-content4" class="tab-content"><br>
+            <h1>Returns Information</h1>
+            <form action="{% url 'closelisting' auction.id%}" class="card-content" method="POST" style="margin-top:8px;">
+                {% csrf_token %} {{close.as_p}}
+                <input type="hidden" value="{{ item.id }}" name="item_id">
+                <button class="subscribe-btn" type="submit">Close Listing</button>
+            </form>
+        </div>
+    </div>
+
+
+    {{form}} {% endblock %}
