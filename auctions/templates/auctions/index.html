@@ -1,0 +1,259 @@
+{% extends "auctions/layout.html" %}
+
+
+{% block content%}
+<div class="fluid-container">
+    <center>
+        
+        <nav class="navbar navbar-expand-lg navbar-dark justify-content-between text-white" style="background-color: #074774;">
+            <div class="collapse navbar-collapse" id="navbarNavDropdown01">
+                <div id="navbarCollapse">
+                    <ul class="navbar-nav ">
+                    
+                        <!--dropdown item of menu-->
+                        <li class="nav-item dropdown position-static" >
+                            <a class="nav-link dropdown-toggle menu-item" 
+                               href="#" id="navbarDropdown" 
+                               role="button" data-toggle="dropdown" 
+                               aria-haspopup="true"
+                               aria-expanded="false">
+                              Categories
+                            </a>
+                            
+                            <!--dropdown sub items of menu-->
+                            <div class="dropdown-menu mt-0 w-100 
+                                        shadow border-outline-success" 
+                                 aria-labelledby="navbarDropdown">
+                              
+                                <div class="col dropdown-item">
+                                    <section>
+                                    <div class="menu-title"><a href="{% url 'index' %}">All Listing</a></div>
+                                    <a href="#" class="img-wrapper"><span class="img"><img src="https://picsum.photos/400?random=1" alt="Random Image" /></span></a>
+                                    <p>Very beautiful.</p>
+                                    </section>
+                                </div>
+                                {% for c in categories %}
+                                <div class="col dropdown-item">
+                                    <section>
+                                    
+                                    <div ><a href="{{ c.get_absolute_url }}" class="menu-title">{{ c.item_cat }}</a></div>
+                                    <ul class="mega-links">
+                                        <li><a href="#" class="menu-item">Item with a long menu name 1</a></li>
+                                        <li><a href="#" class="menu-item">Item with a long menu name 2</a></li>
+                                        <li><a href="#" class="menu-item">Item with a long menu name 3</a></li>
+                                        <li><a href="#" class="menu-item">Item with a long menu name 4</a></li>
+                                        <li><a href="#" class="menu-item">Item with a long menu name 5</a></li>
+                                    </ul>
+                                    </section>
+                                    
+                                </div>{% endfor %}
+                                
+                        </li>
+                        
+    
+                    </ul>
+
+                    
+                </div>
+                <div style="margin-right: 10%;">
+                    <p class="navbar-nav mr-auto py-0 ml-2" style="color: #fff;">
+                        {{category.item_cat}}
+                    </p>
+                </div>
+                
+    <!-- <div class="container">
+        <div id="sidebar">
+        <h3>Categories</h3>
+            <ul>
+                <li>
+                <h4> <a href="{% url "index" %}">All</a></h4>
+                </li>
+            {% for c in categories %}
+                <li>
+               <h4> <a href="{{ c.get_absolute_url }}">{{ c.item_cat }}</a></h4>
+                </li>
+            {% endfor %}
+            </ul>
+        </div></div> -->
+
+                <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                    <div id='search-box'>
+                        <form action='/search' id='search-form' method='get' target='_top'>
+                            <input id='search-text' name='q' placeholder='Search Box' type='text'/>
+                            <button id='search-button' type='submit'><span>Search</span></button>
+                        </form>
+                    </div>
+                </div>
+
+                    
+                
+                
+            </div>
+        </nav>
+    </center>
+</div>
+    <!-- <div class="container-fluid"> 
+        <div class="row border-top">
+            
+            
+
+            <div class="col-lg-12 style="width: 100%;">
+                <nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0" ">
+                    
+                    
+
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle menu-item" data-toggle="dropdown">Categories</a>
+                        <div class="mega-menu rounded-0 m-0" >
+                            <div class="dropdown-menu  content_cat">
+                                <div class="col dropdown-item">
+                                    <section>
+                                    <div class="menu-title">Category 1</div>
+                                    <a href="#" class="img-wrapper"><span class="img"><img src="https://picsum.photos/400?random=1" alt="Random Image" /></span></a>
+                                    <p>Very beautiful.</p>
+                                    </section>
+                                </div>
+                                <div class="col dropdown-item">
+                                    <section>
+                                    <div class="menu-title">Category 2</div>
+                                    <ul class="mega-links">
+                                        <li><a href="#" class="menu-item">Item with a long menu name 1</a></li>
+                                        <li><a href="#" class="menu-item">Item with a long menu name 2</a></li>
+                                        <li><a href="#" class="menu-item">Item with a long menu name 3</a></li>
+                                        <li><a href="#" class="menu-item">Item with a long menu name 4</a></li>
+                                        <li><a href="#" class="menu-item">Item with a long menu name 5</a></li>
+                                    </ul>
+                                    </section>
+                                </div>
+                                <div class="col dropdown-item">
+                                    <section>
+                                    <div class="menu-title">Category 3</div>
+                                    <ul class="mega-links">
+                                        <li><a href="#" class="menu-item">Item 1</a></li>
+                                        <li><a href="#" class="menu-item">Item 2</a></li>
+                                        <li><a href="#" class="menu-item">Item 3</a></li>
+                                        <li><a href="#" class="menu-item">Item 4</a></li>
+                                        <li><a href="#" class="menu-item">Item 5</a></li>
+                                    </ul>
+                                    </section>
+                                </div>
+                                <div class="col dropdown-item">
+                                    <section>
+                                    <div class="menu-title">Category 4</div>
+                                    <ul class="mega-links">
+                                        <li><a href="#" class="menu-item">Item 1</a></li>
+                                        <li><a href="#" class="menu-item">Item 2</a></li>
+                                        <li><a href="#" class="menu-item">Item 3</a></li>
+                                        <li><a href="#" class="menu-item">Item 4</a></li>
+                                        <li><a href="#" class="menu-item">Item 5</a></li>
+                                    </ul>
+                                    </section>
+                                </div>
+                            </div>                        
+                        </div>
+                    </div>
+                    <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                        <div class="navbar-nav mr-auto py-0">
+                            <a href="index.html" class="nav-item nav-link">Home</a>
+                            <a href="shop.html" class="nav-item nav-link active">Shop</a>
+                            <a href="detail.html" class="nav-item nav-link">Shop Detail</a>
+                            <div class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
+                                <div class="dropdown-menu rounded-0 m-0">
+                                    <a href="cart.html" class="dropdown-item">Shopping Cart</a>
+                                    <a href="checkout.html" class="dropdown-item">Checkout</a>
+                                </div>
+                            </div>
+                            <a href="contact.html" class="nav-item nav-link">Contact</a>
+                        </div>
+                        <div class="navbar-nav ml-auto py-0">
+                            <a href="" class="nav-item nav-link">Login</a>
+                            <a href="" class="nav-item nav-link">Register</a>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+    Navbar End -->
+{% endblock%}
+
+
+
+{% block body %}
+<div id="content">
+    <div id="content1">
+    
+
+
+        
+    <div class="row match-height" style="justify-content: center;" 
+        <ul class="col-lg-4 col-md-12" >
+            
+            {% for auction in auctions %}
+            {% if auction.is_active%}
+            
+            <div class="card text-center" style="width: 22%; margin: .5%;">
+                <li style="list-style-type: none;">
+                    <div  class="card-content">
+                        <a href="{% url 'listing' auction.id %}">
+                            <div><img class="card-img-top img-fluid" src="/media/{{ auction.image }}" alt="Card image cap"></div>
+                            <h5 class="card-title" style="margin-top: 3%;">{{ auction.title }}</h5>
+                        </a>
+                        <div class="card-body">
+                            
+                            <p class="card-text">{{ auction.description}}</p>
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <span class="btn btn-outline-blue-grey" style="border: 1px solid black">${{auction.price}}</span>
+                                {% if user.is_authenticated %}<button type="button" class="btn btn-outline-blue-grey" style="border: 1px solid black; ">Shop Now <i class="icon-cart3"></i></button>{% else %}<button type="button" class="btn btn-outline-blue-grey" style="border: 1px solid black; " disabled>Shop Now <i class="icon-cart3"></i></button>{% endif %}
+                            </div>
+                        </div>
+                        
+                    </div>
+                        
+                    
+                </li>
+            </div>
+            {% endif%}
+            {% endfor %}
+        </ul>
+    </div>
+
+
+
+
+    <hr>
+
+    <div class="row ">
+		<div class="col-12">
+			<div class="card-deck-wrapper">
+				<div class="card-deck">
+                    {% for auction in auctions %}
+                    
+					<div class="card" style="min-width: 18rem; margin: 10px;">
+						<div class="card-content">
+							<img class="card-img-top img-fluid" src="/media/{{ auction.image }}" alt="Card image cap"/>
+							<div class="card-body">
+								<h4 class="card-title">{{ auction.title }}</h4>
+								<p class="card-text">This card has supporting text below as a natural lead-in to
+									additional content.</p>
+								<p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                                <p class="card-text">{{ auction.description}}</p>
+                                <div class="btn-group" role="group" aria-label="Basic example" style="justify-content: center;">
+                                    <span class="btn btn-outline-blue-grey" style="border: 1px solid black">${{auction.price}}</span>
+                                    <button type="button" class="btn btn-outline-blue-grey" style="border: 1px solid black; ">Shop Now <i class="icon-cart3"></i></button>
+                                </div>
+                                </div>
+						</div>
+					</div>
+                
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,85 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>{% block title %}Auctions{% endblock %}</title>
+        
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="{% static 'auctions/js.js' %}"></script>
+
+        <link href="{% static 'auctions/styles.css' %}" rel="stylesheet">
+    </head>
+    <body>
+        <div class="flex-container">
+            
+            <div class="left"><h1>Auctions</h1></div>
+            
+
+            <div class="center">
+                {% if user.is_authenticated %}
+                    Signed in as <strong>{{ user.username }}</strong>.
+                {% else %}
+                    Not signed in.
+                {% endif %}
+            </div>
+
+            <div class="right">
+                {% with request.resolver_match.url_name as url_name %}
+                <ul class="nav nav-tabs" role="tablist">
+
+
+
+                    <li class="nav-item">
+                        <a class="nav-link {% if url_name == 'index' %}active{% endif %}" href="{% url 'index' %}">Active Listings</a>
+                    </li>
+                    {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link {% if url_name == 'create' %}active{% endif %}"  href="{% url 'create' %}">Create Listing</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if url_name == 'wishlist' %}active{% endif %}"  href="{% url 'wishlist' %}">Watch List</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if url_name == 'logout' %}active{% endif %}"  href="{% url 'logout' %}">Log Out</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link {% if url_name == 'login' %}active{% endif %}"  href="{% url 'login' %}">Log In</a>
+                        </li>
+                        <li class="nav-item" >
+                            <a class="nav-link {% if url_name == 'register' %}active{% endif %}"  href="{% url 'register' %}">Register</a>
+                        </li>
+                    {% endif %}
+                </ul>
+                {% endwith %}
+                
+            </div>
+
+
+
+            
+        </div>
+        <hr>
+
+        {% block content%}
+        {% endblock%}
+
+
+
+
+        
+
+
+
+        {% block body %}
+        {% endblock %}
+
+
+        
+    </body>
+</html>

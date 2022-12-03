@@ -1,0 +1,41 @@
+{% extends "auctions/layout.html" %}
+
+<style></style>
+
+{% block body %}
+<style>
+    body{
+        color: #ffffff;
+    }
+</style>
+{% if user.is_authenticated %}
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-12 col-md-8 push-2">
+                <h2>Create a listing</h2>
+                <hr><br>
+            </div>
+        </div>
+
+        {% if message %}
+            <div>{{ message }}</div>
+        {% endif %}
+
+        <form action="{% url 'create' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Save</button>
+
+        </form>
+
+    </div>
+{% else %}
+    <a type="button" class="btn btn-primary fw500 btn-sm" href="{% url 'login'  %}">Login</a>
+{% endif %}
+
+
+
+
+
+    
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends "auctions/layout.html" %}
+
+{% block title %}Users Wish List{% endblock %}
+
+{% block body %}
+<div class="col-12 mx-auto">
+  <h1 class="h3">My Wishlist</h1>
+  <div>Manage your Wishlist</div>
+  <hr />
+
+  {% if wishlist %}
+  {% for auction in wishlist  %}
+
+  <div class="card mb-3 rounded-0">
+    <div class="row g-0">
+      <div class="col-md-2">
+       
+          
+          <img class="img-fluid d-block p-2" width="135px" src="/media/{{ auction.image }}"
+            alt="{{ image.image.alt_text }}" />
+         
+       
+      </div>
+      <div class="col-md-10">
+        <div class="card-body">
+          <h5 class="card-title">{{auction.title}}</h5>
+          <p class="card-text">{{auction.description}}</p>
+          <p class="card-text"><small class="text-muted">{{auction.price}}</small></p>
+          <a type="button" class="btn btn-primary fw500 btn-sm" href="{% url 'add_to_wishlist' auction.id %}">Remove from Wishlist</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% endfor %}
+  {% else %}
+  <p class="card-text">No auctions have been added to your wishlist yet</p>
+  {% endif %}
+
+
+
+</div>
+{% endblock %}
